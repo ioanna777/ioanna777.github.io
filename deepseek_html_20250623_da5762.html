@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert-O-Matic | Fun Unit Conversion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 3px solid rgba(255,255,255,0.2);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: #FFD166;
+            background: #1a2a6c;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .logo-text span {
+            color: #FFD166;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .hero {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .fun-fact {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .fact-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            color: #1a2a6c;
+        }
+        
+        .fact-header i {
+            font-size: 1.8rem;
+            color: #FF6B6B;
+        }
+        
+        .fact-header h2 {
+            font-size: 1.8rem;
+        }
+        
+        .fact-content {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .giraffe-img {
+            flex: 1;
+            min-width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            border-radius: 15px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .giraffe {
+            position: absolute;
+            bottom: 0;
+            width: 180px;
+            height: 220px;
+        }
+        
+        .giraffe-neck {
+            position: absolute;
+            width: 40px;
+            height: 150px;
+            background: #FFD166;
+            border-radius: 20px;
+            bottom: 70px;
+            left: 70px;
+        }
+        
+        .giraffe-head {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #FFD166;
+            border-radius: 50%;
+            bottom: 220px;
+            left: 65px;
+        }
+        
+        .giraffe-ear {
+            position: absolute;
+            width: 15px;
+            height: 25px;
+            background: #FFD166;
+            border-radius: 50%;
+            bottom: 240px;
+            left: 85px;
+            transform: rotate(-15deg);
+        }
+        
+        .giraffe-spot {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #e6a020;
+            border-radius: 50%;
+        }
+        
+        .fact-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .fact-text h3 {
+            font-size: 2.2rem;
+            color: #1a2a6c;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .fact-text p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #444;
+        }
+        
+        .conversion-display {
+            background: #f0f8ff;
+            border-radius: 10px;
+            padding: 15px;
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+            margin-top: 15px;
+            border-left: 4px solid #4facfe;
+        }
+        
+        .converter {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .converter-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .converter-header h2 {
+            font-size: 2rem;
+            color: #1a2a6c;
+            margin-bottom: 10px;
+        }
+        
+        .converter-header p {
+            color: #666;
+        }
+        
+        .conversion-inputs {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a2a6c;
+        }
+        
+        .input-group input, .input-group select {
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            border-color: #4facfe;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+        }
+        
+        .swap-btn {
+            align-self: flex-end;
+            margin-bottom: 8px;
+            background: #1a2a6c;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .swap-btn:hover {
+            background: #0d1a4a;
+            transform: rotate(180deg);
+        }
+        
+        .convert-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .convert-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1a2a6c;
+            display: none;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .popular-conversions {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            color: #1a2a6c;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            border-radius: 2px;
+        }
+        
+        .conversion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .conversion-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .conversion-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #4facfe;
+        }
+        
+        .conversion-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #1a2a6c;
+        }
+        
+        .conversion-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #1a2a6c;
+            font-size: 1.2rem;
+        }
+        
+        .conversion-example {
+            font-size: 0.95rem;
+            color: #666;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            color: white;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .spot {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #e6a020;
+            border-radius: 50%;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .conversion-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .swap-btn {
+                align-self: center;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="logo-text">Convert<span>-O-Matic</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-calculator"></i> Converter</a></li>
+                    <li><a href="#"><i class="fas fa-history"></i> History</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div class="hero">
+            <div class="fun-fact">
+                <div class="fact-header">
+                    <i class="fas fa-lightbulb"></i>
+                    <h2>Fun Fact of the Day</h2>
+                </div>
+                <div class="fact-content">
+                    <div class="giraffe-img">
+                        <div class="giraffe">
+                            <div class="giraffe-neck"></div>
+                            <div class="giraffe-head"></div>
+                            <div class="giraffe-ear"></div>
+                            <div class="spot" style="top: 70px; left: 70px;"></div>
+                            <div class="spot" style="top: 100px; left: 90px;"></div>
+                            <div class="spot" style="top: 130px; left: 65px;"></div>
+                            <div class="spot" style="top: 60px; left: 90px;"></div>
+                            <div class="spot" style="top: 90px; left: 65px;"></div>
+                        </div>
+                    </div>
+                    <div class="fact-text">
+                        <h3>Did you know? A giraffe's height can be 5.5 meters or 18 feet!</h3>
+                        <p>Giraffes are the tallest mammals on Earth, with their legs alone being taller than many humans at about 6 feet (1.8 meters). These magnificent creatures use their height to browse on leaves and buds in treetops that few other animals can reach.</p>
+                        <div class="conversion-display">
+                            <div>5.5 m =</div>
+                            <div style="font-weight: 700; color: #1a2a6c;">18.0446 feet</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="converter">
+                <div class="converter-header">
+                    <h2>Universal Unit Converter</h2>
+                    <p>Convert between different units of measurement</p>
+                </div>
+                <div class="conversion-inputs">
+                    <div class="input-group">
+                        <label for="value">Value</label>
+                        <input type="number" id="value" placeholder="Enter value" value="5.5">
+                    </div>
+                    
+                    <button class="swap-btn" id="swap-btn">
+                        <i class="fas fa-exchange-alt"></i>
+                    </button>
+                    
+                    <div class="input-group">
+                        <label for="from-unit">From Unit</label>
+                        <select id="from-unit">
+                            <option value="meter">Meter (m)</option>
+                            <option value="foot">Foot (ft)</option>
+                            <option value="inch">Inch (in)</option>
+                            <option value="cm">Centimeter (cm)</option>
+                            <option value="km">Kilometer (km)</option>
+                            <option value="mile">Mile (mi)</option>
+                            <option value="cups">Cups (US)</option>
+                            <option value="ml">Milliliters (mL)</option>
+                            <option value="pound">Pound (lb)</option>
+                            <option value="kg">Kilogram (kg)</option>
+                            <option value="fahrenheit">Fahrenheit (°F)</option>
+                            <option value="celsius">Celsius (°C)</option>
+                        </select>
+                    </div>
+                    
+                    <div></div>
+                    <div></div>
+                    
+                    <div class="input-group">
+                        <label for="to-unit">To Unit</label>
+                        <select id="to-unit">
+                            <option value="foot">Foot (ft)</option>
+                            <option value="meter">Meter (m)</option>
+                            <option value="inch">Inch (in)</option>
+                            <option value="cm">Centimeter (cm)</option>
+                            <option value="km">Kilometer (km)</option>
+                            <option value="mile">Mile (mi)</option>
+                            <option value="ml">Milliliters (mL)</option>
+                            <option value="cups">Cups (US)</option>
+                            <option value="kg">Kilogram (kg)</option>
+                            <option value="pound">Pound (lb)</option>
+                            <option value="celsius">Celsius (°C)</option>
+                            <option value="fahrenheit">Fahrenheit (°F)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="convert-btn" id="convert-btn">
+                    <i class="fas fa-bolt"></i> Convert Now
+                </button>
+                
+                <div class="result" id="result">
+                    5.5 Meters = 18.0446 Feet
+                </div>
+            </div>
+        </div>
+        
+        <div class="popular-conversions">
+            <div class="section-header">
+                <h2>Popular Conversions</h2>
+                <p>Quickly convert commonly used measurements</p>
+            </div>
+            
+            <div class="conversion-grid">
+                <div class="conversion-card" id="cups-to-ml">
+                    <div class="conversion-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="conversion-title">Cups to Milliliters</div>
+                    <div class="conversion-example">1 Cup = 236.588 mL</div>
+                </div>
+                
+                <div class="conversion-card" id="pounds-to-kg">
+                    <div class="conversion-icon">
+                        <i class="fas fa-weight-hanging"></i>
+                    </div>
+                    <div class="conversion-title">Pounds to Kilograms</div>
+                    <div class="conversion-example">1 Pound = 0.4536 kg</div>
+                </div>
+                
+                <div class="conversion-card" id="f-to-c">
+                    <div class="conversion-icon">
+                        <i class="fas fa-temperature-high"></i>
+                    </div>
+                    <div class="conversion-title">Fahrenheit to Celsius</div>
+                    <div class="conversion-example">32°F = 0°C</div>
+                </div>
+                
+                <div class="conversion-card" id="miles-to-km">
+                    <div class="conversion-icon">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <div class="conversion-title">Miles to Kilometers</div>
+                    <div class="conversion-example">1 Mile = 1.609 km</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2023 Convert-O-Matic | The Fun Way to Convert Units</p>
+            <p>Did you know? A giraffe's long neck contains the same number of vertebrae as a human's - just seven!</p>
+        </footer>
+    </div>
+
+    <script>
+        // DOM Elements
+        const valueInput = document.getElementById('value');
+        const fromUnitSelect = document.getElementById('from-unit');
+        const toUnitSelect = document.getElementById('to-unit');
+        const convertBtn = document.getElementById('convert-btn');
+        const swapBtn = document.getElementById('swap-btn');
+        const resultDiv = document.getElementById('result');
+        
+        // Popular conversion cards
+        const cupsToMlCard = document.getElementById('cups-to-ml');
+        const poundsToKgCard = document.getElementById('pounds-to-kg');
+        const fToCCard = document.getElementById('f-to-c');
+        const milesToKmCard = document.getElementById('miles-to-km');
+        
+        // Convert function
+        function convert() {
+            const value = parseFloat(valueInput.value);
+            
+            if (isNaN(value)) {
+                alert('Please enter a valid number');
+                return;
+            }
+            
+            const fromUnit = fromUnitSelect.value;
+            const toUnit = toUnitSelect.value;
+            
+            if (fromUnit === toUnit) {
+                resultDiv.textContent = `${value} ${getUnitName(fromUnit)} = ${value} ${getUnitName(toUnit)}`;
+                resultDiv.style.display = 'block';
+                return;
+            }
+            
+            let result;
+            
+            // Handle temperature conversions
+            if (fromUnit === 'fahrenheit' && toUnit === 'celsius') {
+                result = (value - 32) * 5/9;
+            } else if (fromUnit === 'celsius' && toUnit === 'fahrenheit') {
+                result = (value * 9/5) + 32;
+            } 
+            // Handle other conversions
+            else {
+                // Conversion factors for all units
+                const conversionTable = {
+                    // Length conversions
+                    meter: {
+                        foot: 3.28084,
+                        inch: 39.3701,
+                        cm: 100,
+                        km: 0.001,
+                        mile: 0.000621371
+                    },
+                    foot: {
+                        meter: 0.3048,
+                        inch: 12,
+                        cm: 30.48,
+                        km: 0.0003048,
+                        mile: 0.000189394
+                    },
+                    inch: {
+                        meter: 0.0254,
+                        foot: 0.0833333,
+                        cm: 2.54,
+                        km: 0.0000254,
+                        mile: 0.000015783
+                    },
+                    cm: {
+                        meter: 0.01,
+                        foot: 0.0328084,
+                        inch: 0.393701,
+                        km: 0.00001,
+                        mile: 0.00000621371
+                    },
+                    km: {
+                        meter: 1000,
+                        foot: 3280.84,
+                        inch: 39370.1,
+                        cm: 100000,
+                        mile: 0.621371
+                    },
+                    mile: {
+                        meter: 1609.34,
+                        foot: 5280,
+                        inch: 63360,
+                        cm: 160934,
+                        km: 1.60934
+                    },
+                    // Volume conversions
+                    cups: {
+                        ml: 236.588
+                    },
+                    ml: {
+                        cups: 0.00422675
+                    },
+                    // Weight conversions
+                    pound: {
+                        kg: 0.453592
+                    },
+                    kg: {
+                        pound: 2.20462
+                    }
+                };
+                
+                if (conversionTable[fromUnit] && conversionTable[fromUnit][toUnit]) {
+                    result = value * conversionTable[fromUnit][toUnit];
+                } else if (conversionTable[toUnit] && conversionTable[toUnit][fromUnit]) {
+                    result = value / conversionTable[toUnit][fromUnit];
+                } else {
+                    alert('Conversion not supported');
+                    return;
+                }
+            }
+            
+            // Format numbers
+            const formattedValue = value % 1 === 0 ? value : value.toFixed(2);
+            const formattedResult = result % 1 === 0 ? result : result.toFixed(4);
+            
+            // Get display names
+            const fromDisplay = getUnitName(fromUnit);
+            const toDisplay = getUnitName(toUnit);
+            
+            resultDiv.textContent = `${formattedValue} ${fromDisplay} = ${formattedResult} ${toDisplay}`;
+            resultDiv.style.display = 'block';
+        }
+        
+        // Get unit display name
+        function getUnitName(unit) {
+            const unitNames = {
+                meter: "Meters",
+                foot: "Feet",
+                inch: "Inches",
+                cm: "Centimeters",
+                km: "Kilometers",
+                mile: "Miles",
+                cups: "Cups",
+                ml: "Milliliters",
+                pound: "Pounds",
+                kg: "Kilograms",
+                fahrenheit: "°F",
+                celsius: "°C"
+            };
+            return unitNames[unit] || unit;
+        }
+        
+        // Swap units function
+        function swapUnits() {
+            const tempUnit = fromUnitSelect.value;
+            fromUnitSelect.value = toUnitSelect.value;
+            toUnitSelect.value = tempUnit;
+            convert();
+        }
+        
+        // Set up popular conversions
+        cupsToMlCard.addEventListener('click', function() {
+            fromUnitSelect.value = 'cups';
+            toUnitSelect.value = 'ml';
+            valueInput.value = '1';
+            convert();
+            
+            // Visual feedback
+            this.style.borderColor = '#4facfe';
+            setTimeout(() => this.style.borderColor = 'transparent', 1000);
+        });
+        
+        poundsToKgCard.addEventListener('click', function() {
+            fromUnitSelect.value = 'pound';
+            toUnitSelect.value = 'kg';
+            valueInput.value = '1';
+            convert();
+            
+            // Visual feedback
+            this.style.borderColor = '#4facfe';
+            setTimeout(() => this.style.borderColor = 'transparent', 1000);
+        });
+        
+        fToCCard.addEventListener('click', function() {
+            fromUnitSelect.value = 'fahrenheit';
+            toUnitSelect.value = 'celsius';
+            valueInput.value = '32';
+            convert();
+            
+            // Visual feedback
+            this.style.borderColor = '#4facfe';
+            setTimeout(() => this.style.borderColor = 'transparent', 1000);
+        });
+        
+        milesToKmCard.addEventListener('click', function() {
+            fromUnitSelect.value = 'mile';
+            toUnitSelect.value = 'km';
+            valueInput.value = '1';
+            convert();
+            
+            // Visual feedback
+            this.style.borderColor = '#4facfe';
+            setTimeout(() => this.style.borderColor = 'transparent', 1000);
+        });
+        
+        // Event listeners
+        convertBtn.addEventListener('click', convert);
+        swapBtn.addEventListener('click', swapUnits);
+        
+        // Initialize with giraffe conversion
+        window.addEventListener('DOMContentLoaded', convert);
+    </script>
+</body>
+</html>
